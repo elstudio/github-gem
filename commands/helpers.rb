@@ -242,7 +242,7 @@ helper :network_page_for do |user|
 end
 
 helper :network_meta_for do |user|
-  "http://github.com/#{user}/#{project}/network_meta"
+  "https://github.com/#{user}/#{project}/network_meta"
 end
 
 
@@ -355,6 +355,23 @@ helper :commits_cache_path do
 end
 
 helper :cache_data do |user|
+  # require 'net/https'
+  # require 'uri'
+  # raw_data = ""
+  # uri = URI.parse(network_meta_for(user))
+  # http = Net::HTTP.new(uri.host, uri.port)
+  # if uri.scheme == "https"  # enable SSL/TLS
+  #   http.use_ssl = true 
+  #   http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  # end
+  # http.start {
+  #   http.request_get(uri) {|res|
+  #     raw_data = res.body
+  #   }
+  # }
+  #require 'openssl'
+  #OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
+
   raw_data = Kernel.open(network_meta_for(user)).read
   File.open( network_cache_path, 'w' ) do |out|
     out.write(raw_data)
